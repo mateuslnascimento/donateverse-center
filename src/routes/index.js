@@ -2,8 +2,11 @@
 
 import express from 'express';
 
-import {donationController} from '../controllers/donationCenter';
+import donationCenterController from '../controllers/donationCenter';
 
 const router = express.Router();
 
-router.get('/', donationController.get);
+router.get('/', donationCenterController.get);
+router.get('/:id', donationCenterController.getById);
+router.post('/', donationContdonationCenterControlleroller.post);
+router.delete('/:id', donationCenterController.remove);

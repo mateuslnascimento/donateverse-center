@@ -2,7 +2,7 @@
 
 import {donationCenterRepository} from '../repositories';
 
-const donationController = () => {
+const donationCenterController = () => {
     const get = async(res) => {
         try {
             const response = await donationCenterRepository.get();
@@ -83,7 +83,7 @@ const donationController = () => {
             })
         }
     };
-    return{
+    return {
         get,
         getById,
         post,
@@ -91,4 +91,4 @@ const donationController = () => {
     }
 }
 
-module.exports = donationController;
+module.exports = donationCenterController;
