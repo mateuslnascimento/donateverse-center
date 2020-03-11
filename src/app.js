@@ -4,10 +4,16 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
+import {connectionString} from './config';
+
 const app = express();
 const router = express.router();
 
-mongoose.connect();
+mongoose.connect(connectionString);
+
+import {DonationCenter} from './models/donationCenter';
+
+import donationRoute from './routes';
 
 app.use(
     bodyParser.json({
@@ -18,4 +24,4 @@ app.use(
     })
 );
 
-export default app;
+export default app; 

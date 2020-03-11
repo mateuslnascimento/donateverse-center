@@ -50,6 +50,13 @@ const donationCenterSchema = new Schema ({
             type: String,
             required: true,
         },
+        dateCreation:{
+            type: Date,
+            required: true,
+        },
+        dateLastChange:{
+            type: Date,   
+        }
 
     },
 })
