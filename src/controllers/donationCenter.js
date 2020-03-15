@@ -1,8 +1,8 @@
 'use strict';
 
-import {donationCenterRepository} from '../repositories';
+const donationCenterRepository = require('../repositories');
+const getGeolocation = require('../services');
 
-const donationCenterController = () => {
     const get = async(res) => {
         try {
             const response = await donationCenterRepository.get();
@@ -28,6 +28,8 @@ const donationCenterController = () => {
     const post = async(req, res) => {
         const { body: {
             name,
+            owner,
+            description,
             isActive,
             address: {
                 zipCode,
@@ -43,22 +45,32 @@ const donationCenterController = () => {
             }
 
         }} = req
+
+        const address = `${number}+${street}+${district}`;
+        
+        const geolocate = await getGeolocation(address.replace(' ', '+'));
+        console.log(geolocate);
+
         try {
             await donationCenterRepository.create({
-                name: name,
-                isActive: isActive,
+                name,
+                isActive,
+                userId,
+                description,
                 address: {
-                    zipCode:zipCode,
-                    street:street,
-                    number:number,
-                    district: district,
-                    city: city,
-                    state: state,
-                    stateInitials: stateInitials,
-                    country: country,
-                    countryInitials: countryInitials,
-                    additionalInfo: additionalInfo,
+                    zipCode,
+                    street,
+                    number,
+                    district,
+                    city,
+                    state,
+                    stateInitials,
+                    country,
+                    countryInitials,
+                    additionalInfo,
                     dateCreation: new Date(),
+                    latitue,
+                    longitude,
                 }
 
             })
@@ -83,12 +95,8 @@ const donationCenterController = () => {
             })
         }
     };
-    return {
-        get,
-        getById,
-        post,
-        remove,
-    }
-}
 
-module.exports = donationCenterController;
+module.exports ={ get,
+getById,
+post,
+remove}

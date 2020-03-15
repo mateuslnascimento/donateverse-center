@@ -1,12 +1,14 @@
 'use strict';
 
-import express from 'express';
+const express = require('express');
 
-import donationCenterController from '../controllers/donationCenter';
+const donationCenterController = require('../controllers/donationCenter');
 
 const router = express.Router();
 
 router.get('/', donationCenterController.get);
+router.post('/', donationCenterController.post);
 router.get('/:id', donationCenterController.getById);
-router.post('/', donationContdonationCenterControlleroller.post);
 router.delete('/:id', donationCenterController.remove);
+
+module.exports = router;

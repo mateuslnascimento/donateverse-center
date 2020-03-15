@@ -1,19 +1,20 @@
 'use strict';
 
-import express from 'express';
-import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
-import {connectionString} from './config';
+const connectionString = 'mongodb://127.0.0.1:27017/microservices?readPreference=primary';
 
 const app = express();
-const router = express.router();
+const router = express.Router();
 
-mongoose.connect(connectionString);
+console.log(connectionString);
+mongoose.connect(connectionString, {useNewUrlParser: true, useUnifiedTopology: true});
 
-import {DonationCenter} from './models/donationCenter';
+const {DonationCenter} = require('./models/donationCenter');
 
-import donationRoute from './routes';
+const donationRoute = require('./routes');
 
 app.use(
     bodyParser.json({
@@ -21,7 +22,9 @@ app.use(
     }),
     bodyParser.urlencoded({
         extended: false,
-    })
+    }),
 );
 
-export default app; 
+app.use('/DonationCenter', donationRoute);
+
+module.exports = app; 

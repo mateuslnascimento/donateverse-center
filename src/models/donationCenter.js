@@ -1,9 +1,17 @@
-const {Schema} = require('mongoose');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const donationCenterSchema = new Schema ({
     name:{
         type: String,
         required: true,
+    },
+    userId:{
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
     },
     isActive: {
         type: Boolean,
@@ -48,14 +56,18 @@ const donationCenterSchema = new Schema ({
         },
         additionalInfo:{
             type: String,
-            required: true,
         },
         dateCreation:{
             type: Date,
-            required: true,
         },
         dateLastChange:{
             type: Date,   
+        },
+        latitude:{
+            type: String,
+        },
+        longitude:{
+            type: String,
         }
 
     },
