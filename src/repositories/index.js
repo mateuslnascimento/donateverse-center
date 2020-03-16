@@ -21,10 +21,9 @@ const DonationCenter = mongoose.model('DonationCenter');
         return donationCenter;
     };
     const update = async(id , data) => {
-        
-        const response = await DonationCenter.findByIdAndUpdate(id, {
-            data,
-            dateLastChange: new Date(),
+        data.dateLastChange = new Date();
+        const response = await DonationCenter.findOneAndUpdate(id, {
+            data
         });
         return response;
     }
