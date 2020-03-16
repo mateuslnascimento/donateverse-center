@@ -1,8 +1,6 @@
 'use strict';
 
-
 const donationCenterRepository = require('../repositories');
-const getGeolocation = require('../services');
 
     const get = async(req, res) => {
         try {
@@ -52,8 +50,6 @@ const getGeolocation = require('../services');
             }
 
         }} = req;
-
-        // const address = `${number}+${street}+${district}`;
         
 
         try {
@@ -105,10 +101,28 @@ const getGeolocation = require('../services');
             })
         }
     };
+    const update = async(req, res) => {
+        try {
+            const response = await donationCenterRepository.update(req.body);
+            res.status(201).send({
+                status: 201,
+                message:'Centro de Doações atualizado com sucesso!',
+                response
+            });
+            
+        } catch(error) {
+            res.status(500).send({
+                status: 500,
+                message: 'Falha na atualização do Centro de Doação, tente novamente mais tarde',
+                error: error
+            })
+        }
+    };
 
 module.exports ={ 
     get,
     getById,
     post,
+    update,
     remove
 }

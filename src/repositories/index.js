@@ -21,40 +21,12 @@ const DonationCenter = mongoose.model('DonationCenter');
         return donationCenter;
     };
     const update = async(id , data) => {
-        const { 
-            name,
-            isActive,
-            address: {
-                zipCode,
-                street,
-                number,
-                district,
-                city,
-                state,
-                stateInitials,
-                country,
-                countryInitials,
-                additionalInfo,
-            }
-        } = data;
-
-        await DonationCenter.findByIdAndUpdate(id, {
-            name: name,
-                isActive: isActive,
-                address: {
-                    zipCode:zipCode,
-                    street:street,
-                    number:number,
-                    district: district,
-                    city: city,
-                    state: state,
-                    stateInitials: stateInitials,
-                    country: country,
-                    countryInitials: countryInitials,
-                    additionalInfo: additionalInfo,
-                    dateLastChange: new Date(),
-                }
-        })
+        
+        const response = await DonationCenter.findByIdAndUpdate(id, {
+            data,
+            dateLastChange: new Date(),
+        });
+        return response;
     }
     const remove = async(id) => {
         const response = await DonationCenter.findByIdAndDelete(id);
