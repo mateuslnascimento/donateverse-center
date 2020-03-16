@@ -103,7 +103,7 @@ const donationCenterRepository = require('../repositories');
     };
     const update = async(req, res) => {
         try {
-            const response = await donationCenterRepository.update(req.body);
+            const response = await donationCenterRepository.update(req.params.id, req.body);
             res.status(201).send({
                 status: 201,
                 message:'Centro de Doações atualizado com sucesso!',

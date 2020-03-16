@@ -21,11 +21,18 @@ const DonationCenter = mongoose.model('DonationCenter');
         return donationCenter;
     };
     const update = async(id , data) => {
-        data.dateLastChange = new Date();
-        const response = await DonationCenter.findOneAndUpdate(id, {
-            data
-        });
-        return response;
+        try {
+            data.dateLastChange = new Date();
+            const response = await DonationCenter.findOneAndUpdate(id, {
+                $set: {
+                    data,
+                }
+            });
+            return response;
+        } catch (error) {
+            throw error;
+        };
+
     }
     const remove = async(id) => {
         const response = await DonationCenter.findByIdAndDelete(id);
