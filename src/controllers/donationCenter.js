@@ -1,34 +1,41 @@
 'use strict';
 
+
 const donationCenterRepository = require('../repositories');
 const getGeolocation = require('../services');
 
-    const get = async(res) => {
+    const get = async(req, res) => {
         try {
             const response = await donationCenterRepository.get();
-            res.status(200).send(response);
+            res.send(response);
 
         } catch(error) {
             res.status(500).send({
-                message: 'Falha na busca de Centros de Doação'
+                status: 500,
+                message: 'Falha na busca de Centros de Doação',
+                error: error
             });
         }
     }
     const getById = async(req, res) => {
         try {
-            const result = await donationCenterRepository.findById(req.params.id);
-            res.status(200).send(result);
+            const response = await donationCenterRepository.getById(req.params.id);
+            res.send({
+                response
+            });
 
         } catch(error){
             res.status(500).send({
-                message: 'Falha na consulta do Centro de Doação, tente novamente mais tarde'
+                status: 500,
+                message: 'Falha na consulta do Centro de Doação, tente novamente mais tarde',
+                error: error,
             })
         }
     }
     const post = async(req, res) => {
         const { body: {
             name,
-            owner,
+            userId,
             description,
             isActive,
             address: {
@@ -44,15 +51,13 @@ const getGeolocation = require('../services');
                 additionalInfo,
             }
 
-        }} = req
+        }} = req;
 
-        const address = `${number}+${street}+${district}`;
+        // const address = `${number}+${street}+${district}`;
         
-        const geolocate = await getGeolocation(address.replace(' ', '+'));
-        console.log(geolocate);
 
         try {
-            await donationCenterRepository.create({
+            const response = await donationCenterRepository.create({
                 name,
                 isActive,
                 userId,
@@ -69,16 +74,20 @@ const getGeolocation = require('../services');
                     countryInitials,
                     additionalInfo,
                     dateCreation: new Date(),
-                    latitue,
-                    longitude,
                 }
 
-            })
-            res.status(200).send(response)
+            });
+            res.status(201).send({
+                status: 201,
+                message:'Centro de Doações cadastrado com sucesso!',
+                response
+            });
             
         } catch(error) {
             res.status(500).send({
-                message: 'Falha na criação do Centro de Doação, tente novamente mais tarde'
+                status: 500,
+                message: 'Falha na criação do Centro de Doação, tente novamente mais tarde',
+                error: error
             })
         }
     }
@@ -91,12 +100,15 @@ const getGeolocation = require('../services');
 
         } catch(error){
             res.status(500).send({
+                status: 500,
                 message: 'Falha na consulta do Centro de Doação, tente novamente mais tarde'
             })
         }
     };
 
-module.exports ={ get,
-getById,
-post,
-remove}
+module.exports ={ 
+    get,
+    getById,
+    post,
+    remove
+}

@@ -4,7 +4,6 @@ const mongoose =require('mongoose');
 
 const DonationCenter = mongoose.model('DonationCenter');
 
-const donationCenterRepository = () => {
     
     const get = async() => {
         const response = await DonationCenter.find({
@@ -19,6 +18,7 @@ const donationCenterRepository = () => {
     const create = async(data) => {
         const donationCenter = new DonationCenter(data);
         await donationCenter.save();
+        return donationCenter;
     };
     const update = async(id , data) => {
         const { 
@@ -60,14 +60,12 @@ const donationCenterRepository = () => {
         const response = await DonationCenter.findByIdAndDelete(id);
         return response;
     }
+      
 
-    return {
-        get,
-        getById,
-        create,
-        update,
-        remove,
-    }
-}
-
-module.exports = donationCenterRepository;
+module.exports = {
+    get,
+    getById,
+    create,
+    update,
+    remove,
+};
