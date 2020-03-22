@@ -22,12 +22,30 @@ const DonationCenter = mongoose.model('DonationCenter');
     };
     const update = async(id , data) => {
         try {
-            data.dateLastChange = new Date();
-            const response = await DonationCenter.findOneAndUpdate(id, {
-                $set: {
-                    data,
-                }
-            });
+            const response = await DonationCenter.findByIdAndUpdate(
+                id, 
+                {$set: { 
+                    name: data.name,
+                    userId: data.userId,
+                    description: data.description,
+                    isActive: data.isActive,
+                    address: {
+                        zipCode: data.address.zipCode,
+                        street: data.address.street,
+                        number: data.address.number,
+                        district: data.address.district,
+                        city: data.address.city,
+                        state: data.address.state,
+                        stateInitials: data.address.stateInitials,
+                        country: data.address.country,
+                        countryInitials: data.address.countryInitials,
+                        additionalInfo: data.address.additionalInfo
+                        },
+                    dateCreation: data.dateCreation,       
+                    dateLastChange : new Date(),
+                 }},
+                {new: true}
+                );
             return response;
         } catch (error) {
             throw error;

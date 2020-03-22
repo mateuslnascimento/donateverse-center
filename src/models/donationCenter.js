@@ -17,6 +17,12 @@ const donationCenterSchema = new Schema ({
         type: Boolean,
         required: true,
     },
+    dateCreation:{
+        type: Date,
+    },
+    dateLastChange:{
+        type: Date,   
+    },
     address: {
         zipCode:{
             type: String,
@@ -57,19 +63,6 @@ const donationCenterSchema = new Schema ({
         additionalInfo:{
             type: String,
         },
-        dateCreation:{
-            type: Date,
-        },
-        dateLastChange:{
-            type: Date,   
-        },
-        latitude:{
-            type: String,
-        },
-        longitude:{
-            type: String,
-        }
-
     },
 })
 

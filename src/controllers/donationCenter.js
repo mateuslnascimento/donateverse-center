@@ -69,8 +69,8 @@ const donationCenterRepository = require('../repositories');
                     country,
                     countryInitials,
                     additionalInfo,
-                    dateCreation: new Date(),
-                }
+                },
+                dateCreation: new Date(),
 
             });
             res.status(201).send({
